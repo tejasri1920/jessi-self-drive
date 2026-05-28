@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Jessi Self Drive Cars and Rentals - Self-drive & chauffeured car rentals in Prasadampadu, Vijayawada. Starting ₹799/day. Book on WhatsApp." />
+  <title>Jessi Self Drive Cars & Rentals | Vijayawada</title>
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#E8A020',
+            'gold-hover': '#FFB830',
+            dark: '#1A1A1A',
+            surface: '#FFFFFF',
+            's2': '#F5F7FA',
+            'text-p': '#1A1A1A',
+            'text-m': '#6B7280',
+          },
+          fontFamily: {
+            bebas: ['"Poppins"', 'sans-serif'],
+            dm: ['"Poppins"', 'sans-serif'],
+          },
+        }
+      },
+      safelist: [
+        'bg-gold','text-gold','border-gold','bg-s2','text-text-m','opacity-0','translate-y-4',
+        'fleet-sel','fleet-sel-selected','service-card-selected'
+      ]
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      background: #FFFFFF;
+      color: #1A1A1A;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Poppins heading overrides */
+    .font-bebas {
+      font-family: 'Poppins', sans-serif !important;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+
+    /* ---- WhatsApp pulse ---- */
+    @keyframes wa-pulse {
+      0%   { transform: scale(1); opacity: .7; }
+      100% { transform: scale(2); opacity: 0; }
+    }
+    .wa-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      background: #25D366;
+      animation: wa-pulse 2.2s ease-out infinite;
+      z-index: 0;
+    }
+
+    /* ---- Navbar scroll class ---- */
+    .nav-solid {
+      background: #FFFFFF !important;
+      border-bottom: 1px solid #E8E8E8 !important;
+      box-shadow: 0 2px 16px rgba(0,0,0,.07) !important;
+    }
+
+    /* ---- Mobile menu ---- */
+    .mob-menu { max-height: 0; overflow: hidden; transition: max-height .38s ease; }
+    .mob-menu.open { max-height: 320px; }
+
+    /* ---- Car card ---- */
+    .car-card {
+      border: 1px solid #EBEBEB;
+      transition: transform .28s, box-shadow .28s;
+    }
+    .car-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 0 2px #E8A020, 0 20px 40px rgba(232,160,32,.12);
+      border-color: #E8A020;
+    }
+
+    /* ---- Service selector card ---- */
+    .svc-card {
+      cursor: pointer;
+      border: 2px solid #E5E7EB;
+      border-radius: 14px;
+      padding: 28px 20px;
+      text-align: center;
+      transition: border-color .2s, background .2s;
+      background: #FAFAFA;
+    }
+    .svc-card:hover { border-color: #E8A020; background: #FFFBF2; }
+    .svc-card.chosen {
+      border-color: #E8A020;
+      background: #FFF8E6;
+    }
+
+    /* ---- Fleet mini card ---- */
+    .fl-card {
+      cursor: pointer;
+      border: 2px solid #E5E7EB;
+      border-radius: 10px;
+      min-height: 130px;
+      overflow: hidden;
+      padding: 0;
+      background: #FAFAFA;
+      transition: border-color .2s, background .2s;
+    }
+    .fl-card:hover { border-color: #E8A020; }
+    .fl-card.chosen {
+      border-color: #E8A020;
+      background: #FFF8E6;
+    }
+
+    /* ---- Form input ---- */
+    .fi {
+      width: 100%;
+      background: #F5F7FA;
+      border: 1.5px solid #E5E7EB;
+      color: #1A1A1A;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .fi:focus { border-color: #E8A020; background: #FFFBF2; }
+    .fi.err   { border-color: #ef4444; }
+    .fi::placeholder { color: #9CA3AF; }
+
+    /* ---- Step circles ---- */
+    .sc {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 14px;
+      transition: background .3s, color .3s;
+      flex-shrink: 0;
+    }
+    .sc-active   { background: #E8A020; color: #fff; }
+    .sc-done     { background: #E8A020; color: #fff; }
+    .sc-inactive { background: #E5E7EB; color: #9CA3AF; }
+
+    /* ---- Connector ---- */
+    .conn { flex: 1; height: 2px; background: #E5E7EB; transition: background .3s; max-width: 80px; }
+    .conn.active { background: #E8A020; }
+
+    /* ---- Toast ---- */
+    .toast {
+      position: fixed; bottom: 90px; left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      background: #1A1A1A; border: 1px solid #E8A020;
+      color: #fff; padding: 11px 24px;
+      border-radius: 10px; font-size: 14px;
+      opacity: 0; transition: opacity .3s, transform .3s;
+      z-index: 9999; white-space: nowrap;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ---- Why card ---- */
+    .why-card {
+      border-top: 4px solid #E8A020;
+      border: 1px solid #EBEBEB;
+      border-top: 4px solid #E8A020;
+    }
+
+    /* ---- Back to top ---- */
+    #btt { opacity: 0; pointer-events: none; transition: opacity .3s; }
+    #btt.show { opacity: 1; pointer-events: auto; }
+
+    /* ---- Section heading accent line ---- */
+    .accent-line::after {
+      content: '';
+      display: block;
+      width: 50px; height: 3px;
+      background: #E8A020;
+      margin: 12px auto 0;
+      border-radius: 2px;
+    }
+
+    /* ---- Scrollbar ---- */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #F5F5F5; }
+    ::-webkit-scrollbar-thumb { background: #E8A020; border-radius: 3px; }
+
+    /* ---- Booking step transition ---- */
+    .bstep { transition: opacity .25s, transform .25s; }
+
+    /* date input */
+    input[type="date"] { color-scheme: light; }
+
+    /* ---- Stat divider ---- */
+    .stat-div { width: 1px; height: 56px; background: #E8E8E8; }
+
+    /* ---- Section alt bg ---- */
+    .sec-alt { background: #FFF8EC; }
+
+    /* ---- How It Works card ---- */
+    .hiw-card {
+      background: #FFFFFF;
+      border: 1px solid #EBEBEB;
+      border-radius: 16px;
+      padding: 32px;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .25s;
+    }
+    .hiw-card:hover { box-shadow: 0 8px 32px rgba(232,160,32,.15); border-color: #E8A020; }
+
+    /* ---- How It Works icon box ---- */
+    .hiw-icon {
+      width: 56px; height: 56px;
+      border-radius: 12px;
+      background: #FFF3D6;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      transition: background .2s;
+    }
+    .hiw-card:hover .hiw-icon { background: #FFE9A8; }
+
+    /* ---- Hero Slideshow ---- */
+    .hero-slide { position:absolute; inset:0; opacity:0; pointer-events:none; transition:opacity 0.75s ease; }
+    .hero-slide.active { opacity:1; pointer-events:auto; }
+    .hero-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.5); border:none; cursor:pointer; transition:background .3s,transform .3s; padding:0; }
+    .hero-dot.active { background:#E8A020; transform:scale(1.3); }
+    .hero-nav-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.25); backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.4); border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .2s; color:#fff; font-size:18px; line-height:1; }
+    .hero-nav-btn:hover { background:rgba(232,160,32,0.7); }
+
+    /* ---- Fleet card (horizontal) ---- */
+    .car-card { border:1px solid #E8E8E8; transition:box-shadow .25s,border-color .25s; }
+    .car-card:hover { box-shadow:0 8px 32px rgba(232,160,32,.12); border-color:#E8A020; }
+
+    /* ---- Mobile overrides ---- */
+    @media (max-width: 640px) {
+      /* Booking car photo narrower on small phones */
+      .fl-photo-col { width: 110px !important; }
+
+      /* Hero slider shorter on phones */
+      #hero-slider { height: 240px !important; }
+
+      /* Hero decorative grid — keep inside bounds */
+      .hero-deco-dots { display: none; }
+
+      /* Contact phone — don't overflow */
+      .contact-phone { font-size: clamp(28px, 8vw, 48px) !important; }
+
+      /* Stat dividers — hide on mobile, stats wrap naturally */
+      .stat-div { display: none; }
+
+      /* Section top/bottom padding smaller on phones */
+      section.py-20 { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ================================================================
+     NAVBAR
+================================================================ -->
+<nav id="nav" class="fixed top-0 inset-x-0 z-50 py-4 px-5 md:px-10 transition-all duration-300">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="#home" class="flex flex-col leading-none select-none">
+      <span class="font-bebas text-gold text-[28px] tracking-[0.12em]">JESSI</span>
+      <span class="font-bebas text-[#444] text-[13px] tracking-[0.18em] -mt-0.5">SELF DRIVE CARS &amp; RENTALS</span>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-7">
+      <a href="#home"         class="text-[#444] hover:text-gold text-sm font-medium transition-colors">Home</a>
+      <a href="#fleet"        class="text-[#444] hover:text-gold text-sm font-medium transition-colors">Fleet</a>
+      <a href="#how-it-works" class="text-[#444] hover:text-gold text-sm font-medium transition-colors">How It Works</a>
+      <a href="#contact"      class="text-[#444] hover:text-gold text-sm font-medium transition-colors">Contact</a>
+      <a href="#book" class="bg-gold hover:bg-gold-hover text-dark font-bold px-5 py-2.5 rounded-lg text-sm transition-all hover:scale-105 hover:shadow-lg hover:shadow-gold/20">
+        Book Now
+      </a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="ham" class="md:hidden text-[#1A1A1A] p-1" aria-label="Menu">
+      <svg id="ham-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mob-menu" class="mob-menu md:hidden">
+    <div class="bg-white mt-3 rounded-2xl mx-0 flex flex-col p-4 gap-1 border border-[#EBEBEB] shadow-lg">
+      <a href="#home"         class="text-[#444] hover:text-gold py-2.5 px-4 rounded-xl hover:bg-s2 transition-all text-sm">Home</a>
+      <a href="#fleet"        class="text-[#444] hover:text-gold py-2.5 px-4 rounded-xl hover:bg-s2 transition-all text-sm">Fleet</a>
+      <a href="#how-it-works" class="text-[#444] hover:text-gold py-2.5 px-4 rounded-xl hover:bg-s2 transition-all text-sm">How It Works</a>
+      <a href="#contact"      class="text-[#444] hover:text-gold py-2.5 px-4 rounded-xl hover:bg-s2 transition-all text-sm">Contact</a>
+      <a href="#book" class="bg-gold text-dark font-bold py-3 px-4 rounded-xl text-center text-sm mt-1">Book Now</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ================================================================
+     HERO
+================================================================ -->
+<section id="home" class="relative min-h-screen flex items-center bg-white overflow-hidden">
+
+  <!-- Gold top accent bar -->
+  <div class="absolute top-0 inset-x-0 h-1.5 bg-gold z-10"></div>
+
+  <div class="max-w-7xl mx-auto w-full px-5 md:px-12 pt-28 pb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+
+      <!-- LEFT: Text -->
+      <div data-aos="fade-right" data-aos-duration="800">
+
+        <!-- Location badge -->
+        <div class="inline-flex items-center gap-2 border border-gold/40 text-[#6B7280] text-xs px-4 py-2 rounded-full mb-6 font-medium"
+             style="background:rgba(232,160,32,.08);">
+          <span>📍</span><span>Prasadampadu, Vijayawada</span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="font-bebas leading-none mb-5">
+          <span class="block text-[clamp(50px,7vw,80px)] text-[#1A1A1A] tracking-wider">DRIVE FREE.</span>
+          <span class="block text-[clamp(50px,7vw,80px)] text-gold tracking-wider">EXPLORE MORE.</span>
+        </h1>
+
+        <!-- Sub -->
+        <p class="text-[#6B7280] text-lg leading-relaxed mb-8 max-w-md">
+          Self-drive &amp; chauffeured rentals starting at
+          <span class="text-gold font-semibold">₹799/day</span>.
+          No hidden charges. Just pure freedom on Vijayawada roads.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap gap-4 mb-8">
+          <a href="#book"
+             class="bg-gold hover:bg-gold-hover text-white font-bold px-8 py-4 rounded-xl text-base transition-all hover:scale-105 hover:shadow-xl hover:shadow-gold/30">
+            Book Now
+          </a>
+          <a href="tel:9700927660"
+             class="border-2 border-[#1A1A1A] hover:border-gold hover:text-gold text-[#1A1A1A] font-semibold px-8 py-4 rounded-xl text-base transition-all hover:scale-105">
+            📞 Call Us
+          </a>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="flex flex-wrap gap-x-6 gap-y-2">
+          <span class="text-[#6B7280] text-sm"><span class="text-gold font-bold mr-1">✓</span>6+ Cars Available</span>
+          <span class="text-[#6B7280] text-sm"><span class="text-gold font-bold mr-1">✓</span>24/7 Support</span>
+          <span class="text-[#6B7280] text-sm"><span class="text-gold font-bold mr-1">✓</span>Instant WhatsApp Booking</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: Car slideshow -->
+      <div class="flex justify-center lg:justify-end" data-aos="fade-left" data-aos-duration="900" data-aos-delay="150">
+        <div class="relative" style="max-width:520px;width:100%;padding-bottom:16px;">
+
+          <!-- Slideshow frame -->
+          <div id="hero-slider" class="rounded-2xl overflow-hidden relative"
+               style="border:3px solid #E8A020;box-shadow:0 20px 60px rgba(232,160,32,0.2);height:340px;">
+
+            <!-- Slide 0: Alto -->
+            <div class="hero-slide active" id="hslide-0">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Maruti_Suzuki_Alto_K10.jpg"
+                   alt="Maruti Alto K10" class="w-full h-full" style="object-fit:cover;object-position:center;">
+              <div class="absolute bottom-0 inset-x-0 px-5 py-4" style="background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 100%);">
+                <div class="text-white font-bold text-lg leading-tight">Maruti Alto K10</div>
+                <div class="text-gold text-sm font-semibold">₹799/day · Hatchback</div>
+              </div>
+            </div>
+
+            <!-- Slide 1: Swift -->
+            <div class="hero-slide" id="hslide-1">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Suzuki_Swift_%282024%29_hybrid_DSC_6076.jpg"
+                   alt="Maruti Swift" class="w-full h-full" style="object-fit:cover;object-position:center;">
+              <div class="absolute bottom-0 inset-x-0 px-5 py-4" style="background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 100%);">
+                <div class="text-white font-bold text-lg leading-tight">Maruti Swift</div>
+                <div class="text-gold text-sm font-semibold">₹999/day · Hatchback</div>
+              </div>
+            </div>
+
+            <!-- Slide 2: i20 -->
+            <div class="hero-slide" id="hslide-2">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Hyundai_i20_%28BC3%29_IMG_4109.jpg"
+                   alt="Hyundai i20" class="w-full h-full" style="object-fit:cover;object-position:center;">
+              <div class="absolute bottom-0 inset-x-0 px-5 py-4" style="background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 100%);">
+                <div class="text-white font-bold text-lg leading-tight">Hyundai i20</div>
+                <div class="text-gold text-sm font-semibold">₹1,299/day · Premium Hatchback</div>
+              </div>
+            </div>
+
+            <!-- Slide 3: Dzire -->
+            <div class="hero-slide" id="hslide-3">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Maruti_Suzuki_Dzire_VXi_VVT.JPG"
+                   alt="Maruti Swift Dzire" class="w-full h-full" style="object-fit:cover;object-position:center;">
+              <div class="absolute bottom-0 inset-x-0 px-5 py-4" style="background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 100%);">
+                <div class="text-white font-bold text-lg leading-tight">Maruti Swift Dzire</div>
+                <div class="text-gold text-sm font-semibold">₹1,199/day · Sedan</div>
+              </div>
+            </div>
+
+            <!-- Slide 4: Innova -->
+            <div class="hero-slide" id="hslide-4">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Toyota_Innova_Crysta_2.4_Z_side.jpg"
+                   alt="Toyota Innova" class="w-full h-full" style="object-fit:cover;object-position:center;">
+              <div class="absolute bottom-0 inset-x-0 px-5 py-4" style="background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 100%);">
+                <div class="text-white font-bold text-lg leading-tight">Toyota Innova</div>
+                <div class="text-gold text-sm font-semibold">₹2,499/day · MUV</div>
+              </div>
+            </div>
+
+            <!-- Slide 5: Scorpio -->
+            <div class="hero-slide" id="hslide-5">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/2024_Mahindra_Scorpio_Z8L_front.jpg"
+                   alt="Mahindra Scorpio" class="w-full h-full" style="object-fit:cover;object-position:center;">
+              <div class="absolute bottom-0 inset-x-0 px-5 py-4" style="background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 100%);">
+                <div class="text-white font-bold text-lg leading-tight">Mahindra Scorpio</div>
+                <div class="text-gold text-sm font-semibold">₹2,299/day · SUV</div>
+              </div>
+            </div>
+
+            <!-- Prev / Next arrows -->
+            <button class="hero-nav-btn" id="hero-prev" style="left:12px;" aria-label="Previous">&#8249;</button>
+            <button class="hero-nav-btn" id="hero-next" style="right:12px;" aria-label="Next">&#8250;</button>
+
+            <!-- Dot indicators -->
+            <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2" id="hero-dots">
+              <button class="hero-dot active" data-idx="0"></button>
+              <button class="hero-dot" data-idx="1"></button>
+              <button class="hero-dot" data-idx="2"></button>
+              <button class="hero-dot" data-idx="3"></button>
+              <button class="hero-dot" data-idx="4"></button>
+              <button class="hero-dot" data-idx="5"></button>
+            </div>
+          </div>
+
+          <!-- Decorative dot grid -->
+          <div class="hero-deco-dots absolute -top-5 -right-5 w-24 h-24 opacity-20" style="background-image:radial-gradient(#E8A020 1.5px,transparent 0);background-size:12px 12px;border-radius:8px;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-1.5 z-10">
+    <span class="text-xs text-[#6B7280] tracking-widest uppercase">Scroll</span>
+    <svg class="w-4 h-4 text-gold animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     STATS BAR
+================================================================ -->
+<div class="border-y border-[#EBEBEB] py-8 px-5" style="background:#FFF8EC;">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex flex-wrap justify-around items-center gap-8">
+
+      <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="0">
+        <span class="font-bebas text-5xl text-gold tracking-wider leading-none">6+</span>
+        <span class="text-[#6B7280] text-sm mt-1.5">Cars Available</span>
+      </div>
+
+      <div class="stat-div hidden sm:block"></div>
+
+      <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="80">
+        <span class="font-bebas text-5xl text-gold tracking-wider leading-none">₹799</span>
+        <span class="text-[#6B7280] text-sm mt-1.5">Starting Price/day</span>
+      </div>
+
+      <div class="stat-div hidden sm:block"></div>
+
+      <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="160">
+        <span class="font-bebas text-5xl text-gold tracking-wider leading-none">24/7</span>
+        <span class="text-[#6B7280] text-sm mt-1.5">Support</span>
+      </div>
+
+      <div class="stat-div hidden sm:block"></div>
+
+      <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="240">
+        <span class="font-bebas text-5xl text-gold tracking-wider leading-none">100+</span>
+        <span class="text-[#6B7280] text-sm mt-1.5">Happy Customers</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================
+     HOW IT WORKS
+================================================================ -->
+<section id="how-it-works" class="py-20 px-5 md:px-10">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-gold text-xs font-semibold tracking-[0.3em] uppercase mb-3">Simple Process</p>
+      <h2 class="font-bebas text-5xl md:text-6xl tracking-wider accent-line text-[#1A1A1A]">HOW IT WORKS</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Step 1 -->
+      <div data-aos="fade-up" data-aos-delay="0">
+        <div class="hiw-card group">
+          <span class="font-bebas text-[90px] text-gold/[.07] absolute -top-5 -right-1 select-none leading-none">01</span>
+          <div class="hiw-icon">
+            <svg class="w-7 h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+          </div>
+          <div class="font-bebas text-base text-gold tracking-widest mb-2">STEP 01</div>
+          <h3 class="text-lg font-bold mb-3">Choose a Service</h3>
+          <p class="text-[#6B7280] text-sm leading-relaxed">Pick Self Drive for total freedom, or With Driver for a relaxed, comfortable journey.</p>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div data-aos="fade-up" data-aos-delay="130">
+        <div class="hiw-card group">
+          <span class="font-bebas text-[90px] text-gold/[.07] absolute -top-5 -right-1 select-none leading-none">02</span>
+          <div class="hiw-icon">
+            <svg class="w-7 h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+          </div>
+          <div class="font-bebas text-base text-gold tracking-widest mb-2">STEP 02</div>
+          <h3 class="text-lg font-bold mb-3">Pick Your Car</h3>
+          <p class="text-[#6B7280] text-sm leading-relaxed">Browse our well-maintained fleet — budget hatchbacks, stylish sedans, or spacious SUVs.</p>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div data-aos="fade-up" data-aos-delay="260">
+        <div class="hiw-card group">
+          <span class="font-bebas text-[90px] text-gold/[.07] absolute -top-5 -right-1 select-none leading-none">03</span>
+          <div class="hiw-icon">
+            <svg class="w-7 h-7 text-gold" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </div>
+          <div class="font-bebas text-base text-gold tracking-widest mb-2">STEP 03</div>
+          <h3 class="text-lg font-bold mb-3">Enquire on WhatsApp</h3>
+          <p class="text-[#6B7280] text-sm leading-relaxed">Send a quick message. We confirm availability and you hit the road — simple as that!</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     FLEET
+================================================================ -->
+<section id="fleet" class="py-20 px-5 md:px-10" style="background:#F8F9FA;">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-gold text-xs font-semibold tracking-[0.3em] uppercase mb-3">Our Vehicles</p>
+      <h2 class="font-bebas text-5xl md:text-6xl tracking-wider accent-line text-[#1A1A1A] mb-3">OUR FLEET</h2>
+      <p class="text-[#9A9A9A] text-base mt-5">Choose from our well-maintained cars</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- ---- ALTO ---- -->
+      <div class="car-card bg-white rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="0">
+        <div class="w-full overflow-hidden" style="height:160px;background:#f0f0f0;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Maruti_Suzuki_Alto_K10.jpg"
+               alt="Maruti Alto K10" class="w-full h-full" style="object-fit:cover;object-position:center;" loading="lazy">
+        </div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="bg-gold/15 text-gold text-xs font-semibold px-3 py-1 rounded-full">Hatchback</span>
+            <span class="text-[#9A9A9A] text-xs">⛽ Petrol</span>
+          </div>
+          <h3 class="text-base font-bold mb-1">Maruti Alto K10</h3>
+          <div class="text-[#9A9A9A] text-xs mb-3">👥 5 Seats</div>
+          <div class="flex justify-between items-end mb-4">
+            <div>
+              <div class="text-gold font-bold text-xl leading-none">₹799<span class="text-[#9A9A9A] text-xs font-normal">/day</span></div>
+              <div class="text-[#9A9A9A] text-xs mt-0.5">Self Drive</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[#1A1A1A] font-semibold text-sm leading-none">₹1,299<span class="text-[#9A9A9A] text-xs font-normal">/day</span></div>
+              <div class="text-[#9A9A9A] text-xs mt-0.5">With Driver</div>
+            </div>
+          </div>
+          <a href="#book" class="block w-full text-center border border-gold text-gold hover:bg-gold hover:text-white font-semibold py-2.5 rounded-xl transition-all text-sm">Enquire Now →</a>
+        </div>
+      </div>
+
+      <!-- ---- SWIFT ---- -->
+      <div class="car-card bg-white rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="80">
+        <div class="w-full overflow-hidden" style="height:160px;background:#f0f0f0;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Suzuki_Swift_%282024%29_hybrid_DSC_6076.jpg"
+               alt="Maruti Swift" class="w-full h-full" style="object-fit:cover;object-position:center;" loading="lazy">
+        </div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="bg-gold/15 text-gold text-xs font-semibold px-3 py-1 rounded-full">Hatchback</span>
+            <span class="text-[#9A9A9A] text-xs">⛽ Petrol</span>
+          </div>
+          <h3 class="text-base font-bold mb-1">Maruti Swift</h3>
+          <div class="text-[#9A9A9A] text-xs mb-3">👥 5 Seats</div>
+          <div class="flex justify-between items-end mb-4">
+            <div>
+              <div class="text-gold font-bold text-xl leading-none">₹999<span class="text-[#9A9A9A] text-xs font-normal">/day</span></div>
+              <div class="text-[#9A9A9A] text-xs mt-0.5">Self Drive</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[#1A1A1A] font-semibold text-sm leading-none">₹1,499<span class="text-[#9A9A9A] text-xs font-normal">/day</span></div>
+              <div class="text-[#9A9A9A] text-xs mt-0.5">With Driver</div>
+            </div>
+          </div>
+          <a href="#book" class="block w-full text-center border border-gold text-gold hover:bg-gold hover:text-white font-semibold py-2.5 rounded-xl transition-all text-sm">Enquire Now →</a>
+        </div>
+      </div>
+
+      <!-- ---- i20 ---- -->
+      <div class="car-card bg-white rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="160">
+        <div class="w-full overflow-hidden" style="height:160px;background:#f0f0f0;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Hyundai_i20_%28BC3%29_IMG_4109.jpg"
+               alt="Hyundai i20" class="w-full h-full" style="object-fit:cover;object-position:center;" loading="lazy">
+        </div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="bg-gold/15 text-gold text-xs font-semibold px-3 py-1 rounded-full">Premium Hatchback</span>
+            <span class="text-[#9A9A9A] text-xs">⛽ Petrol</span>
+          </div>
+          <h3 class="text-base font-bold mb-1">Hyundai i20</h3>
+          <div class="text-[#9A9A9A] text-xs mb-3">👥 5 Seats</div>
+          <div class="flex justify-between items-end mb-4">
+            <div>
+              <div class="text-gold font-bold text-xl leading-none">₹1,299<span class="text-[#9A9A9A] text-xs font-normal">/day</span></div>
+              <div class="text-[#9A9A9A] text-xs mt-0.5">Self Drive</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[#1A1A1A] font-semibold text-sm leading-none">₹1,799<span class="text-[#9A9A9A] text-xs font-normal">/day</span></div>
+              <div class="text-[#9A9A9A] text-xs mt-0.5">With Driver</div>
+            </div>
+          </div>
+          <a href="#book" class="block w-full text-center border border-gold text-gold hover:bg-gold hover:text-white font-semibold py-2.5 rounded-xl transition-all text-sm">Enquire Now →</a>
+        </div>
+      </div>
+
+      <!-- ---- DZIRE ---- -->
+      <div class="car-card bg-white rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="0">
+        <div class="w-full overflow-hidden" style="height:160px;background:#f0f0f0;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Maruti_Suzuki_Dzire_VXi_VVT.JPG"
+               alt="Maruti Swift Dzire" class="w-full h-full" style="object-fit:cover;object-position:center;" loading="lazy">
+        </div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold px-3 py-1 rounded-full" style="background:rgba(96,165,250,.12);color:#3b82f6;">Sedan</span>
+            <span class="text-[#9A9A9A] text-xs">⛽ Petrol</span>
+          </div>
+          <h3 class="text-base font-bold mb-1">Maruti Swift Dzire</h3>
+          <div class="text-[#9A9A9A] text-xs mb-3">👥 5 Seats</div>
+          <div class="flex justify-between items-end mb-4">
+            <div>
+              <div class="text-gold font-bold text-xl leading-none">₹1,199<span class="text-[#9A9A9A] text-xs font-normal">/day</span></div>
+              <div class="text-[#9A9A9A] text-xs mt-0.5">Self Drive</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[#1A1A1A] font-semibold text-sm leading-none">₹1,699<span class="text-[#9A9A9A] text-xs font-normal">/day</span></div>
+              <div class="text-[#9A9A9A] text-xs mt-0.5">With Driver</div>
+            </div>
+          </div>
+          <a href="#book" class="block w-full text-center border border-gold text-gold hover:bg-gold hover:text-white font-semibold py-2.5 rounded-xl transition-all text-sm">Enquire Now →</a>
+        </div>
+      </div>
+
+      <!-- ---- INNOVA ---- -->
+      <div class="car-card bg-white rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="80">
+        <div class="w-full overflow-hidden" style="height:160px;background:#f0f0f0;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Toyota_Innova_Crysta_2.4_Z_side.jpg"
+               alt="Toyota Innova" class="w-full h-full" style="object-fit:cover;object-position:center;" loading="lazy">
+        </div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold px-3 py-1 rounded-full" style="background:rgba(168,85,247,.12);color:#a855f7;">MUV</span>
+            <span class="text-[#9A9A9A] text-xs">⛽ Diesel</span>
+          </div>
+          <h3 class="text-base font-bold mb-1">Toyota Innova</h3>
+          <div class="text-[#9A9A9A] text-xs mb-3">👥 7 Seats</div>
+          <div class="flex justify-between items-end mb-4">
+            <div>
+              <div class="text-gold font-bold text-xl leading-none">₹2,499<span class="text-[#9A9A9A] text-xs font-normal">/day</span></div>
+              <div class="text-[#9A9A9A] text-xs mt-0.5">Self Drive</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[#1A1A1A] font-semibold text-sm leading-none">₹3,299<span class="text-[#9A9A9A] text-xs font-normal">/day</span></div>
+              <div class="text-[#9A9A9A] text-xs mt-0.5">With Driver</div>
+            </div>
+          </div>
+          <a href="#book" class="block w-full text-center border border-gold text-gold hover:bg-gold hover:text-white font-semibold py-2.5 rounded-xl transition-all text-sm">Enquire Now →</a>
+        </div>
+      </div>
+
+      <!-- ---- SCORPIO ---- -->
+      <div class="car-card bg-white rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="160">
+        <div class="w-full overflow-hidden" style="height:160px;background:#f0f0f0;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/2024_Mahindra_Scorpio_Z8L_front.jpg"
+               alt="Mahindra Scorpio" class="w-full h-full" style="object-fit:cover;object-position:center;" loading="lazy">
+        </div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold px-3 py-1 rounded-full" style="background:rgba(249,115,22,.12);color:#f97316;">SUV</span>
+            <span class="text-[#9A9A9A] text-xs">⛽ Diesel</span>
+          </div>
+          <h3 class="text-base font-bold mb-1">Mahindra Scorpio</h3>
+          <div class="text-[#9A9A9A] text-xs mb-3">👥 7 Seats</div>
+          <div class="flex justify-between items-end mb-4">
+            <div>
+              <div class="text-gold font-bold text-xl leading-none">₹2,299<span class="text-[#9A9A9A] text-xs font-normal">/day</span></div>
+              <div class="text-[#9A9A9A] text-xs mt-0.5">Self Drive</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[#1A1A1A] font-semibold text-sm leading-none">₹2,999<span class="text-[#9A9A9A] text-xs font-normal">/day</span></div>
+              <div class="text-[#9A9A9A] text-xs mt-0.5">With Driver</div>
+            </div>
+          </div>
+          <a href="#book" class="block w-full text-center border border-gold text-gold hover:bg-gold hover:text-white font-semibold py-2.5 rounded-xl transition-all text-sm">Enquire Now →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     BOOKING FORM
+================================================================ -->
+<section id="book" class="py-20 px-5 md:px-10">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="text-center mb-10" data-aos="fade-up">
+      <p class="text-gold text-xs font-semibold tracking-[0.3em] uppercase mb-3">Quick Enquiry</p>
+      <h2 class="font-bebas text-5xl md:text-6xl tracking-wider accent-line text-[#1A1A1A]">BOOK YOUR RIDE</h2>
+    </div>
+
+    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-xl shadow-gold/5 border border-[#EBEBEB]" data-aos="fade-up" data-aos-delay="80">
+
+      <!-- Progress bar -->
+      <div class="flex items-center justify-center gap-2 mb-8">
+        <div class="sc sc-active" id="sc1">1</div>
+        <span class="text-xs font-medium text-gold hidden sm:inline">Service</span>
+        <div class="conn" id="cn1"></div>
+        <div class="sc sc-inactive" id="sc2">2</div>
+        <span class="text-xs font-medium text-[#9A9A9A] hidden sm:inline" id="sl2">Car</span>
+        <div class="conn" id="cn2"></div>
+        <div class="sc sc-inactive" id="sc3">3</div>
+        <span class="text-xs font-medium text-[#9A9A9A] hidden sm:inline" id="sl3">Details</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div id="s1" class="bstep">
+        <h3 class="text-base font-semibold mb-5 text-center text-[#9A9A9A]">Choose your service type</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="svc-card" id="svc-sd" onclick="pickService('sd',this)">
+            <div class="text-4xl mb-3">🚗</div>
+            <div class="font-bebas text-xl tracking-wider">SELF DRIVE</div>
+            <div class="text-[#9A9A9A] text-xs mt-1">You're in control</div>
+          </div>
+          <div class="svc-card" id="svc-wd" onclick="pickService('wd',this)">
+            <div class="text-4xl mb-3">🧑‍✈️</div>
+            <div class="font-bebas text-xl tracking-wider">WITH DRIVER</div>
+            <div class="text-[#9A9A9A] text-xs mt-1">Sit back &amp; relax</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div id="s2" class="bstep hidden">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="text-base font-semibold">Select a Car</h3>
+          <button onclick="gotoStep(1)" class="text-[#6B7280] hover:text-gold text-sm transition-colors">← Back</button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5" id="fl-grid"></div>
+        <button id="s2btn" onclick="gotoStep(3)" disabled
+          class="w-full bg-gold text-dark font-bold py-3 rounded-xl text-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gold-hover">
+          Continue →
+        </button>
+      </div>
+
+      <!-- STEP 3 -->
+      <div id="s3" class="bstep hidden">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="text-base font-semibold">Your Details</h3>
+          <button onclick="gotoStep(2)" class="text-[#6B7280] hover:text-gold text-sm transition-colors">← Back</button>
+        </div>
+
+        <!-- Summary -->
+        <div class="border border-gold/30 rounded-xl p-4 mb-5 text-sm" style="background:#FFF8EC;">
+          <div class="font-semibold text-gold mb-2 text-sm">📋 Booking Summary</div>
+          <div class="space-y-1 text-[#6B7280] text-xs">
+            <div>Service: <span class="text-[#1A1A1A] font-semibold" id="sum-svc"></span></div>
+            <div>Car: <span class="text-[#1A1A1A] font-semibold" id="sum-car"></span></div>
+            <div>Dates: <span class="text-[#1A1A1A] font-semibold" id="sum-dates">Not set yet</span></div>
+          </div>
+        </div>
+
+        <!-- Fields -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#9A9A9A] mb-1.5 uppercase tracking-wide">Full Name *</label>
+            <input id="fn" type="text" class="fi" placeholder="Your full name">
+            <div id="en" class="text-red-400 text-xs mt-1 hidden"></div>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#9A9A9A] mb-1.5 uppercase tracking-wide">Phone Number *</label>
+            <input id="fp" type="tel" class="fi" placeholder="10-digit mobile number">
+            <div id="ep" class="text-red-400 text-xs mt-1 hidden"></div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-[#9A9A9A] mb-1.5 uppercase tracking-wide">Pickup Date *</label>
+              <input id="fd1" type="date" class="fi">
+              <div id="ed1" class="text-red-400 text-xs mt-1 hidden"></div>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-[#9A9A9A] mb-1.5 uppercase tracking-wide">Drop-off Date *</label>
+              <input id="fd2" type="date" class="fi">
+              <div id="ed2" class="text-red-400 text-xs mt-1 hidden"></div>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#9A9A9A] mb-1.5 uppercase tracking-wide">Pickup Location *</label>
+            <input id="fl1" type="text" class="fi" placeholder="e.g. Prasadampadu, Vijayawada">
+            <div id="el1" class="text-red-400 text-xs mt-1 hidden"></div>
+          </div>
+          <div id="dropoff-grp">
+            <label class="block text-xs font-semibold text-[#9A9A9A] mb-1.5 uppercase tracking-wide">Drop-off Location *</label>
+            <input id="fl2" type="text" class="fi" placeholder="e.g. Guntur Bus Stand">
+            <div id="el2" class="text-red-400 text-xs mt-1 hidden"></div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button onclick="submitForm()"
+          class="mt-6 w-full flex items-center justify-center gap-3 font-bold py-4 rounded-xl text-white text-base transition-all hover:scale-[1.02] hover:shadow-xl"
+          style="background:#25D366;">
+          <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Enquire on WhatsApp
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     WHY CHOOSE US
+================================================================ -->
+<section id="why" class="py-20 px-5 md:px-10" style="background:#FFF8EC;">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-gold text-xs font-semibold tracking-[0.3em] uppercase mb-3">Our Promise</p>
+      <h2 class="font-bebas text-5xl md:text-6xl tracking-wider accent-line text-[#1A1A1A]">WHY CHOOSE US</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <div class="why-card bg-white rounded-2xl p-6" data-aos="fade-up" data-aos-delay="0">
+        <div class="text-3xl mb-4">🕐</div>
+        <h3 class="font-bold text-base mb-2">24/7 Availability</h3>
+        <p class="text-[#6B7280] text-sm leading-relaxed">Round the clock support, always reachable on WhatsApp</p>
+      </div>
+
+      <div class="why-card bg-white rounded-2xl p-6" data-aos="fade-up" data-aos-delay="80">
+        <div class="text-3xl mb-4">🚘</div>
+        <h3 class="font-bold text-base mb-2">Well Maintained</h3>
+        <p class="text-[#6B7280] text-sm leading-relaxed">Every car is cleaned and serviced before your trip</p>
+      </div>
+
+      <div class="why-card bg-white rounded-2xl p-6" data-aos="fade-up" data-aos-delay="160">
+        <div class="text-3xl mb-4">💰</div>
+        <h3 class="font-bold text-base mb-2">Transparent Pricing</h3>
+        <p class="text-[#6B7280] text-sm leading-relaxed">No hidden charges. What you see is what you pay</p>
+      </div>
+
+      <div class="why-card bg-white rounded-2xl p-6" data-aos="fade-up" data-aos-delay="240">
+        <div class="text-3xl mb-4">📍</div>
+        <h3 class="font-bold text-base mb-2">Local &amp; Trusted</h3>
+        <p class="text-[#6B7280] text-sm leading-relaxed">Proudly serving Vijayawada since 2022</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     CONTACT
+================================================================ -->
+<section id="contact" class="py-20 px-5 md:px-10">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-14" data-aos="fade-up">
+      <p class="text-gold text-xs font-semibold tracking-[0.3em] uppercase mb-3">Reach Us</p>
+      <h2 class="font-bebas text-5xl md:text-6xl tracking-wider accent-line text-[#1A1A1A]">GET IN TOUCH</h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+
+      <!-- Left -->
+      <div data-aos="fade-right">
+        <a href="tel:9700927660" class="contact-phone block font-bebas text-5xl md:text-6xl text-gold tracking-wider hover:text-gold-hover transition-colors mb-5">
+          +91 97009 27660
+        </a>
+
+        <a href="https://wa.me/919700927660?text=Hi%2C%20I%20came%20across%20your%20website%2C%20can%20I%20know%20what%20cars%20are%20available%20and%20the%20pricing%20details%3F" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-3 font-bold px-6 py-3 rounded-xl text-white mb-8 transition-all hover:scale-105"
+           style="background:#25D366;">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Chat on WhatsApp
+        </a>
+
+        <div class="space-y-5">
+          <div class="flex items-start gap-3">
+            <span class="text-gold text-base mt-0.5">📍</span>
+            <div>
+              <div class="font-semibold text-sm mb-0.5">Address</div>
+              <div class="text-[#6B7280] text-sm leading-relaxed">
+                Near Ballemvaari Street,<br>
+                Prasadampadu, Currency Nagar,<br>
+                Ramavarappadu, Vijayawada – 521108,<br>
+                Andhra Pradesh, India
+              </div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-gold text-base mt-0.5">🕐</span>
+            <div>
+              <div class="font-semibold text-sm mb-0.5">Hours</div>
+              <div class="text-[#6B7280] text-sm">Open 24/7 — Always Available</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Map -->
+      <div data-aos="fade-left">
+        <div class="rounded-2xl overflow-hidden border border-gold/25" style="height:380px;">
+          <iframe
+            src="https://maps.google.com/maps?q=Jessi+self+drive+cars+and+rentals+in+Vijayawada&output=embed&z=17"
+            width="100%" height="100%"
+            style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Jessi Self Drive Cars – Prasadampadu, Vijayawada">
+          </iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+<footer class="border-t border-[#E8E8E8] py-12 px-5 md:px-10" style="background:#F8F9FA;">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+
+      <div>
+        <div class="flex flex-col leading-none mb-3">
+          <span class="font-bebas text-gold text-[28px] tracking-[.12em]">JESSI</span>
+          <span class="font-bebas text-[#444] text-[13px] tracking-[.18em] -mt-0.5">SELF DRIVE CARS &amp; RENTALS</span>
+        </div>
+        <p class="text-[#6B7280] text-sm leading-relaxed">Drive Free. Explore More.<br>Your trusted car rental partner in Vijayawada.</p>
+      </div>
+
+      <div class="md:text-center">
+        <h4 class="text-xs font-semibold uppercase tracking-widest text-[#9A9A9A] mb-4">Quick Links</h4>
+        <div class="flex flex-col gap-2">
+          <a href="#home"    class="text-[#6B7280] hover:text-gold text-sm transition-colors">Home</a>
+          <a href="#fleet"   class="text-[#6B7280] hover:text-gold text-sm transition-colors">Fleet</a>
+          <a href="#book"    class="text-[#6B7280] hover:text-gold text-sm transition-colors">Book Now</a>
+          <a href="#contact" class="text-[#6B7280] hover:text-gold text-sm transition-colors">Contact</a>
+        </div>
+      </div>
+
+      <div class="md:text-right">
+        <p class="text-[#6B7280] text-sm leading-relaxed mb-2">
+          © 2025 Jessi Self Drive Cars and Rentals.<br>All rights reserved.
+        </p>
+        <p class="text-[#9A9A9A]/40 text-xs">Prasadampadu, Vijayawada, Andhra Pradesh</p>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+<!-- ================================================================
+     FLOATING: WhatsApp + Back to Top
+================================================================ -->
+
+<!-- WhatsApp -->
+<a href="https://wa.me/919700927660?text=Hi%2C%20I%20came%20across%20your%20website%2C%20can%20I%20know%20what%20cars%20are%20available%20and%20the%20pricing%20details%3F" target="_blank" rel="noopener"
+   class="wa-btn fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-2xl"
+   style="background:#25D366;" aria-label="WhatsApp">
+  <svg class="w-7 h-7 text-white relative z-10" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- Back to top -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+  class="fixed bottom-6 left-6 z-50 w-12 h-12 bg-gold hover:bg-gold-hover rounded-full flex items-center justify-center shadow-xl transition-all hover:scale-110"
+  aria-label="Back to top">
+  <svg class="w-5 h-5 text-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+  </svg>
+</button>
+
+<!-- Toast -->
+<div id="toast" class="toast">Redirecting to WhatsApp...</div>
+
+
+<!-- ================================================================
+     AOS
+================================================================ -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init({ duration:700, once:true, easing:'ease-out-cubic', offset:80 });</script>
+
+<!-- ================================================================
+     HERO SLIDESHOW
+================================================================ -->
+<script>
+(function() {
+  const total = 6;
+  let cur = 0;
+  let timer;
+
+  function go(n) {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots   = document.querySelectorAll('.hero-dot');
+    slides[cur].classList.remove('active');
+    dots[cur].classList.remove('active');
+    cur = ((n % total) + total) % total;
+    slides[cur].classList.add('active');
+    dots[cur].classList.add('active');
+  }
+
+  function startAuto() {
+    clearInterval(timer);
+    timer = setInterval(() => go(cur + 1), 3800);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('hero-slider');
+    if (!slider) return;
+
+    document.getElementById('hero-next').addEventListener('click', function() { go(cur + 1); startAuto(); });
+    document.getElementById('hero-prev').addEventListener('click', function() { go(cur - 1); startAuto(); });
+    document.querySelectorAll('.hero-dot').forEach(function(d) {
+      d.addEventListener('click', function() { go(parseInt(d.dataset.idx)); startAuto(); });
+    });
+
+    // Pause on hover
+    slider.addEventListener('mouseenter', function() { clearInterval(timer); });
+    slider.addEventListener('mouseleave', startAuto);
+
+    startAuto();
+  });
+})();
+</script>
+
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+// ---------- DATA ----------
+const CARS = [
+  { id:1, name:'Maruti Alto K10',    type:'Hatchback',          seats:5, fuel:'Petrol', sd:799,  wd:1299, img:'https://upload.wikimedia.org/wikipedia/commons/1/12/Maruti_Suzuki_Alto_K10.jpg' },
+  { id:2, name:'Maruti Swift',        type:'Hatchback',          seats:5, fuel:'Petrol', sd:999,  wd:1499, img:'https://upload.wikimedia.org/wikipedia/commons/3/3d/Suzuki_Swift_%282024%29_hybrid_DSC_6076.jpg' },
+  { id:3, name:'Hyundai i20',         type:'Premium Hatchback',  seats:5, fuel:'Petrol', sd:1299, wd:1799, img:'https://upload.wikimedia.org/wikipedia/commons/e/e1/Hyundai_i20_%28BC3%29_IMG_4109.jpg' },
+  { id:4, name:'Maruti Swift Dzire',  type:'Sedan',              seats:5, fuel:'Petrol', sd:1199, wd:1699, img:'https://upload.wikimedia.org/wikipedia/commons/1/1c/Maruti_Suzuki_Dzire_VXi_VVT.JPG' },
+  { id:5, name:'Toyota Innova',       type:'MUV',                seats:7, fuel:'Diesel', sd:2499, wd:3299, img:'https://upload.wikimedia.org/wikipedia/commons/8/87/Toyota_Innova_Crysta_2.4_Z_side.jpg' },
+  { id:6, name:'Mahindra Scorpio',    type:'SUV',                seats:7, fuel:'Diesel', sd:2299, wd:2999, img:'https://upload.wikimedia.org/wikipedia/commons/b/b4/2024_Mahindra_Scorpio_Z8L_front.jpg' },
+];
+
+let svc = null;   // 'sd' | 'wd'
+let car = null;   // car object
+
+// ---------- NAVBAR ----------
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('nav-solid', window.scrollY > 60);
+  document.getElementById('btt').classList.toggle('show', window.scrollY > 400);
+});
+
+// ---------- HAMBURGER ----------
+const ham = document.getElementById('ham');
+const mob = document.getElementById('mob-menu');
+let mOpen = false;
+ham.addEventListener('click', () => {
+  mOpen = !mOpen;
+  mob.classList.toggle('open', mOpen);
+});
+mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mOpen = false; mob.classList.remove('open');
+}));
+
+// ---------- STEP PROGRESS ----------
+function gotoStep(n) {
+  document.getElementById('s1').classList.toggle('hidden', n !== 1);
+  document.getElementById('s2').classList.toggle('hidden', n !== 2);
+  document.getElementById('s3').classList.toggle('hidden', n !== 3);
+
+  [1,2,3].forEach(i => {
+    const c = document.getElementById('sc'+i);
+    const l = i===2 ? document.getElementById('sl2') : i===3 ? document.getElementById('sl3') : null;
+    if (i < n) {
+      c.className = 'sc sc-done'; c.textContent = '✓';
+      if (l) { l.className = 'text-xs font-medium text-gold hidden sm:inline'; }
+    } else if (i === n) {
+      c.className = 'sc sc-active'; c.textContent = i;
+      if (l) { l.className = 'text-xs font-medium text-gold hidden sm:inline'; }
+    } else {
+      c.className = 'sc sc-inactive'; c.textContent = i;
+      if (l) { l.className = 'text-xs font-medium text-[#9A9A9A] hidden sm:inline'; }
+    }
+  });
+
+  document.getElementById('cn1').classList.toggle('active', n > 1);
+  document.getElementById('cn2').classList.toggle('active', n > 2);
+
+  if (n === 3) refreshSummary();
+}
+
+// ---------- SERVICE PICK ----------
+function pickService(type, el) {
+  svc = type;
+  car = null;
+  document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('chosen'));
+  el.classList.add('chosen');
+  document.getElementById('dropoff-grp').style.display = type === 'wd' ? 'block' : 'none';
+  buildFleetGrid();
+  setTimeout(() => gotoStep(2), 280);
+}
+
+// ---------- FLEET GRID ----------
+function buildFleetGrid() {
+  const g = document.getElementById('fl-grid');
+  g.innerHTML = '';
+  CARS.forEach(c => {
+    const price = svc === 'sd' ? c.sd : c.wd;
+    const label = svc === 'sd' ? 'Self Drive' : 'With Driver';
+    const div = document.createElement('div');
+    div.className = 'fl-card';
+    div.dataset.id = c.id;
+    div.innerHTML = `
+      <div style="display:flex;flex-direction:row;min-height:130px;">
+        <div style="flex:1;padding:12px 14px;display:flex;flex-direction:column;justify-content:center;min-width:0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+            <span style="color:#E8A020;font-size:11px;font-weight:600;">${c.type}</span>
+            <span style="color:#9A9A9A;font-size:11px;">${c.fuel}</span>
+          </div>
+          <div style="font-weight:700;font-size:14px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.name}</div>
+          <div style="color:#9A9A9A;font-size:11px;margin-bottom:7px;">👥 ${c.seats} Seats</div>
+          <div style="color:#E8A020;font-weight:700;font-size:17px;line-height:1;">₹${price.toLocaleString('en-IN')}<span style="color:#9A9A9A;font-size:11px;font-weight:400;">/day</span></div>
+          <div style="color:#9A9A9A;font-size:11px;margin-top:2px;">${label}</div>
+        </div>
+        <div class="fl-photo-col" style="width:140px;flex-shrink:0;overflow:hidden;">
+          <img src="${c.img}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+        </div>
+      </div>
+    `;
+    div.onclick = () => pickCar(c.id);
+    g.appendChild(div);
+  });
+}
+
+// ---------- CAR PICK ----------
+function pickCar(id) {
+  car = CARS.find(c => c.id === id);
+  document.querySelectorAll('.fl-card').forEach(c => c.classList.remove('chosen'));
+  document.querySelector(`.fl-card[data-id="${id}"]`).classList.add('chosen');
+  document.getElementById('s2btn').disabled = false;
+}
+
+// ---------- SUMMARY ----------
+function refreshSummary() {
+  document.getElementById('sum-svc').textContent = svc === 'sd' ? 'Self Drive' : 'With Driver';
+  document.getElementById('sum-car').textContent = car ? car.name : '—';
+  const d1 = document.getElementById('fd1').value;
+  const d2 = document.getElementById('fd2').value;
+  document.getElementById('sum-dates').textContent =
+    (d1 && d2) ? `${fmt(d1)} → ${fmt(d2)}` : 'Not set yet';
+}
+
+document.getElementById('fd1').addEventListener('change', function() {
+  document.getElementById('fd2').min = this.value;
+  refreshSummary();
+});
+document.getElementById('fd2').addEventListener('change', refreshSummary);
+
+// Set today as min for pickup
+document.getElementById('fd1').min = new Date().toISOString().split('T')[0];
+
+// ---------- DATE FORMAT ----------
+function fmt(s) {
+  if (!s) return '';
+  const [y,m,d] = s.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+// ---------- VALIDATION ----------
+function vld(fieldId, errId, ok, msg) {
+  const f = document.getElementById(fieldId);
+  const e = document.getElementById(errId);
+  if (!ok) {
+    f.classList.add('err'); e.textContent = msg; e.classList.remove('hidden');
+    return false;
+  }
+  f.classList.remove('err'); e.classList.add('hidden');
+  return true;
+}
+
+// ---------- SUBMIT ----------
+function submitForm() {
+  const name  = document.getElementById('fn').value.trim();
+  const phone = document.getElementById('fp').value.trim().replace(/[\s+\-]/g,'');
+  const d1    = document.getElementById('fd1').value;
+  const d2    = document.getElementById('fd2').value;
+  const loc1  = document.getElementById('fl1').value.trim();
+  const loc2  = document.getElementById('fl2').value.trim();
+
+  let ok = true;
+  ok = vld('fn',  'en',  name.length >= 2,                       'Please enter your full name') && ok;
+  ok = vld('fp',  'ep',  /^[6-9]\d{9}$/.test(phone),             'Enter a valid 10-digit Indian mobile number') && ok;
+  ok = vld('fd1', 'ed1', d1 !== '',                              'Please select a pickup date') && ok;
+  ok = vld('fd2', 'ed2', d2 !== '' && d2 >= d1,
+    d2 !== '' && d2 < d1 ? 'Drop-off must be after pickup' : 'Please select a drop-off date') && ok;
+  ok = vld('fl1', 'el1', loc1.length >= 3,                       'Please enter a pickup location') && ok;
+  if (svc === 'wd') {
+    ok = vld('fl2', 'el2', loc2.length >= 3,                     'Please enter a drop-off location') && ok;
+  }
+  if (!ok) return;
+
+  let msg;
+  if (svc === 'sd') {
+    msg = `Hi! I'm ${name} and I'd like to book a self-drive for the ${car.name}.\nPickup: ${loc1} on ${fmt(d1)}.\nDrop-off on: ${fmt(d2)}.\nContact: ${phone}.\nIs it available?`;
+  } else {
+    msg = `Hi! I'm ${name} and I'd like to book the ${car.name} with a driver.\nPickup: ${loc1} on ${fmt(d1)}.\nDrop-off: ${loc2} on ${fmt(d2)}.\nContact: ${phone}.\nWhat is the price?`;
+  }
+
+  showToast('Redirecting to WhatsApp...');
+  setTimeout(() => {
+    window.open('https://wa.me/919700927660?text=' + encodeURIComponent(msg), '_blank');
+  }, 600);
+}
+
+// ---------- TOAST ----------
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ---------- INIT ----------
+document.getElementById('dropoff-grp').style.display = 'none';
+</script>
+
+</body>
+</html>
