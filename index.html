@@ -45,15 +45,26 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; }
 
-    html, body {
+    html {
       overflow-x: hidden;
-      max-width: 100%;
     }
 
     body {
       background: #FFFFFF;
       color: #1A1A1A;
       font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+      width: 100%;
+    }
+
+    section, nav, footer, header {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+
+    img, svg, iframe, video {
+      max-width: 100%;
     }
 
     /* Poppins heading overrides */
@@ -62,6 +73,8 @@
       font-weight: 800;
       letter-spacing: -0.01em;
       text-transform: uppercase;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
 
     /* ---- WhatsApp pulse ---- */
@@ -942,7 +955,7 @@
 
       <!-- Left -->
       <div data-aos="fade-right">
-        <a href="tel:9700927660" class="contact-phone block font-bebas text-5xl md:text-6xl text-gold tracking-wider hover:text-gold-hover transition-colors mb-5">
+        <a href="tel:9700927660" class="contact-phone block font-bebas text-gold hover:text-gold-hover transition-colors mb-5" style="font-size:clamp(26px,7vw,52px);letter-spacing:0.05em;">
           +91 97009 27660
         </a>
 
